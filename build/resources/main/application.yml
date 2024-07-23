@@ -3,8 +3,8 @@ spring:
         name: Jisi-Server
     datasource:
         url: ${DB_URL}
-        username: ${USERNAME}
-        password: ${PASSWORD}
+        username: root
+        password: mingyu08
     jpa:
         hibernate:
             ddl-auto: none
