@@ -1,12 +1,11 @@
 package com.example.Jisi_Server.domain.user.entity;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
 
 @Getter @Setter
 @Entity
-@NoArgsConstructor
-@AllArgsConstructor(staticName = "of")
 public class UserEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,9 +16,7 @@ public class UserEntity {
 
     private String username;
 
-    private String password;
+    private String role;
 
-    public static UserEntity of(String phoneNumber, String username, String password) {
-        return new UserEntity(null, phoneNumber, username, password);
-    }
+    private String password;
 }
