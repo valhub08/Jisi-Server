@@ -5,12 +5,9 @@ import com.example.Jisi_Server.domain.user.entity.UserEntity;
 import com.example.Jisi_Server.domain.user.service.UserService;
 import com.example.Jisi_Server.global.security.jwt.JwtUtil;
 import com.example.Jisi_Server.global.service.RefreshTokenService;
-import io.jsonwebtoken.ExpiredJwtException;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -26,8 +23,16 @@ public class AuthController {
     private final RefreshTokenService refreshTokenService;
 
     @PostMapping("/register")
-    public UserEntity register(@RequestBody UserDTO user) {
-        return userService.register(user);
+    public ResponseEntity<?> register(@RequestBody UserDTO user) {
+        try {
+            UserEntity userEntity = userService.register(user);
+            return ResponseEntity
+                    .ok(userEntity);
+        } catch (Exception e) {
+            return ResponseEntity
+                    .badRequest()
+                    .body(e.getMessage());
+        }
     }
 
     @PostMapping("/reissue")
