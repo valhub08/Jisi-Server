@@ -7,9 +7,9 @@ spring:
             password: mingyu08
             port: 6379
     datasource:
-        password: ${PASSWORD}
+        password: mingyu08!!
         url: ${DB_URL}
-        username: ${USERNAME}
+        username: root
     jpa:
         hibernate:
             ddl-auto: none

@@ -1,0 +1,9 @@
+app = "jisi"  # 여기에 애플리케이션 이름을 입력합니다
+
+[build]
+dockerfile = "Dockerfile"
+
+[[services]]
+[[services.ports]]
+handlers = ["http"]
+port = 80

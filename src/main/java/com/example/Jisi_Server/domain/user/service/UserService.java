@@ -60,7 +60,8 @@ public class UserService {
 
         userEntity.setPhoneNumber(phoneNumber);
         userEntity.setPassword(hashedPassword);
-        userEntity.setRole("ROLE_ADMIN");
+        userEntity.setRole("ROLE_USER");
+        // ROLE_USER or ROLE_ADMIN
 
         return userRepository.save(userEntity);
     }
