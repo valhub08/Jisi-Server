@@ -1,0 +1,25 @@
+spring:
+    application:
+        name: Jisi-Server
+    data:
+        redis:
+            host: localhost
+            password: mingyu08
+            port: 6379
+    datasource:
+        password: mingyu08!!
+        url: ${DB_URL}
+        username: root
+    jpa:
+        hibernate:
+            ddl-auto: none
+        properties:
+            hibernate:
+                dialect: org.hibernate.dialect.MySQL8Dialect
+        show-sql: true
+    jwt:
+        access:
+            expiration: 36000
+        refresh:
+            expiration: 86400
+        secret: ${JWT_KEY}
