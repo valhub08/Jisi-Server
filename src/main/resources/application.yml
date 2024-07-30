@@ -4,12 +4,12 @@ spring:
     data:
         redis:
             host: localhost
-            password: mingyu08
+            password: ${ REDIS_PASSWORD }
             port: 6379
     datasource:
-        password: mingyu08!!
-        url: ${DB_URL}
-        username: root
+        password: ${ PASSWORD }
+        url: ${ DB_URL }
+        username: ${ USERNAME }
     jpa:
         hibernate:
             ddl-auto: none
@@ -22,4 +22,4 @@ spring:
             expiration: 36000
         refresh:
             expiration: 86400
-        secret: ${JWT_KEY}
+        secret: ${ JWT_KEY }
