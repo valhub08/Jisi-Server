@@ -46,10 +46,10 @@ jobs:
         uses: appleboy/ssh-action@master
 
         with:
-          host: ${{ secrets.HOST }} # EC2 인스턴스 퍼블릭 DNS
+          host: ${{ secrets.HOST }}
           username: ubuntu
-          key: ${{ secrets.PRIVATE_KEY }} # pem 키
-          port: ${{ secrets.PORT }} # ssh port (22)
+          key: ${{ secrets.PRIVATE_KEY }} 
+          port: ${{ secrets.PORT }} 
           envs: GITHUB_SHA
           script: |
             script: |
