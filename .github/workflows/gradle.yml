@@ -4,10 +4,17 @@ on:
   push:
     branches: [ "main" ]
   pull_request:
-    branches: "main"
+    branches: [ "main" ]
 
 permissions:
   contents: read
+
+env:
+  MYSQL_PASSWORD: ${{ secrets.MYSQL_PASSWORD }}
+  MYSQL_USERNAME: ${{ secrets.MYSQL_USERNAME }}
+  MYSQL_DB_URL: ${{ secrets.MYSQL_DB_URL }}
+  REDIS_PASSWORD: ${{ secrets.REDIS_PASSWORD }}
+  JWT_KEY: ${{ secrets.JWT_KEY }}
 
 jobs:
   build:
