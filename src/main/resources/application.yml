@@ -4,15 +4,15 @@ spring:
     data:
         redis:
             host: localhost
-            password: ${ REDIS_PASSWORD }
+            password: ${REDIS_PASSWORD}
             port: 6379
     datasource:
-        password: ${ PASSWORD }
-        url: ${ DB_URL }
-        username: ${ USERNAME }
+        password: ${MYSQL_PASSWORD}
+        url: ${MYSQL_DB_URL}
+        username: ${MYSQL_USERNAME}
     jpa:
         hibernate:
-            ddl-auto: none
+            ddl-auto: create
         properties:
             hibernate:
                 dialect: org.hibernate.dialect.MySQL8Dialect
@@ -22,4 +22,4 @@ spring:
             expiration: 36000
         refresh:
             expiration: 86400
-        secret: ${ JWT_KEY }
+        secret: ${JWT_KEY}
