@@ -3,7 +3,7 @@ spring:
         name: Jisi-Server
     data:
         redis:
-            host: localhost
+            host: ${REDIS_DB_URL}
             password: ${REDIS_PASSWORD}
             port: 6379
     datasource:
@@ -19,7 +19,7 @@ spring:
         show-sql: true
     jwt:
         access:
-            expiration: 36000
+            expiration: 600000
         refresh:
-            expiration: 86400
+            expiration: 86400000
         secret: ${JWT_KEY}
