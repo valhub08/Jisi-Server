@@ -1,7 +1,7 @@
 package com.example.Jisi_Server.global.service;
 
-import com.example.Jisi_Server.global.exception.JwtSignatureException;
 import com.example.Jisi_Server.global.security.jwt.JwtUtil;
+import com.example.Jisi_Server.global.security.properties.JwtProperties;
 import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -12,7 +12,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -25,7 +24,7 @@ public class RefreshTokenService {
     private static final String TOKEN_PREFIX = "refresh_token:";
     private static final String INVERSE_INDEX_PREFIX = "refresh_to_phoneNumber:";
     private final JwtUtil jwtUtil;
-
+    private final JwtProperties jwtProperties;
 
     /**
      * reissue 다시 access token 발급 및 refresh 토큰을 발급해주는 서비스
@@ -79,14 +78,14 @@ public class RefreshTokenService {
         String phoneNumber = jwtUtil.getPhoneNumber(refresh);
         String role = jwtUtil.getRole(refresh);
 
-        String newAccess = jwtUtil.createJwt("access", phoneNumber, role, 600000L);
-        String newRefresh = jwtUtil.createJwt("refresh", phoneNumber, role, 86400000L);
+        String newAccess = jwtUtil.createJwt("access", phoneNumber, role, jwtProperties.getAccess().getExpiration());
+        String newRefresh = jwtUtil.createJwt("refresh", phoneNumber, role, jwtProperties.getRefresh().getExpiration());
 
         deleteByRefreshToken(refresh);
-        addRefreshEntity(phoneNumber, newRefresh, 86400000L);
+        addRefreshEntity(phoneNumber, newRefresh, jwtProperties.getRefresh().getExpiration());
 
         response.setHeader("access", newAccess);
-        response.addCookie(createCookie("refresh", newRefresh,86400));
+        response.addCookie(createCookie("refresh", newRefresh,jwtProperties.getRefresh().getExpiration()));
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -182,11 +181,12 @@ public class RefreshTokenService {
         return redisTemplate.hasKey(key);
     }
 
-    public Cookie createCookie(String key, String value, Integer maxAge) {
+    public Cookie createCookie(String key, String value, Long maxAge) {
         Cookie cookie = new Cookie(key, value);
-        cookie.setMaxAge(maxAge);
-        //cookie.setSecure(true);
-        //cookie.setPath("/");
+        int maxAgeInt = maxAge.intValue();
+        cookie.setMaxAge(maxAgeInt);
+//        cookie.setSecure(true);
+//        cookie.setPath("/");
         cookie.setHttpOnly(true);
         return cookie;
     }
