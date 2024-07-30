@@ -15,6 +15,7 @@ env:
   MYSQL_DB_URL: ${{ secrets.MYSQL_DB_URL }}
   REDIS_PASSWORD: ${{ secrets.REDIS_PASSWORD }}
   JWT_KEY: ${{ secrets.JWT_KEY }}
+  REDIS_DB_URL: ${{ secrets.REDIS_DB_URL }}
 
 jobs:
   build:
