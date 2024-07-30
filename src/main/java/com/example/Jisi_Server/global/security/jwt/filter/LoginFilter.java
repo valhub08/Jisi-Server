@@ -1,7 +1,6 @@
 package com.example.Jisi_Server.global.security.jwt.filter;
 
 import com.example.Jisi_Server.domain.user.dto.UserDTO;
-import com.example.Jisi_Server.global.exception.CustomConflictException;
 import com.example.Jisi_Server.global.security.jwt.JwtUtil;
 import com.example.Jisi_Server.global.security.properties.JwtProperties;
 import com.example.Jisi_Server.global.service.RefreshTokenService;
@@ -38,15 +37,15 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
         try {
             UserDTO loginRequest = objectMapper.readValue(request.getReader(), UserDTO.class);
 
-            String phoneNumber = loginRequest.getPhoneNumber();
+            String phoneNumber = loginRequest.getPhoneNumber().replaceAll("-", "");
             String password = loginRequest.getPassword();
 
-            if (!phoneNumber.split("-")[0].equals("010")) {
-                throw new CustomConflictException("your phone number must start with 010");
+            if (!loginRequest.getPhoneNumber().split("-")[0].equals("010")) {
+                throw new RuntimeException("your phone number must start with 010");
             }
 
             if (!isPhoneNumberCorrect(loginRequest)) {
-                throw new CustomConflictException("your phone number is incorrect\ntip(010-xxxx-xxxx)");
+                throw new RuntimeException("your phone number is incorrect\ntip(010-xxxx-xxxx)");
             }
 
             UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(phoneNumber, password, null);
