@@ -19,7 +19,7 @@ spring:
         show-sql: true
     jwt:
         access:
-            expiration: 36000
+            expiration: 600000
         refresh:
-            expiration: 86400
+            expiration: 86400000
         secret: ${JWT_KEY}
