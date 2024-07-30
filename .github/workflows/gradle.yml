@@ -39,7 +39,7 @@ jobs:
           docker login -u ${{ secrets.DOCKERHUB_ID }} -p ${{ secrets.DOCKERHUB_PASSWORD }}
           docker build -t jisi . # Dockerfile 경로 수정
           docker tag jisi ${{ secrets.DOCKERHUB_ID2 }}/jisi:latest
-          docker push ${{ secrets.DOCKERHUB_ID }}/jisi:latest
+          docker push ${{ secrets.DOCKERHUB_ID2 }}/jisi:latest
 
       - name: Deploy with SSH
         if: github.ref == 'refs/heads/main'
@@ -57,9 +57,9 @@ jobs:
             docker stop jisi
             docker rm jisi
             docker network disconnect redis-network jisi
-            docker rmi ${{ secrets.DOCKERHUB_ID }}/jisi:latest
-            docker pull ${{ secrets.DOCKERHUB_ID }}/jisi:latest
-            docker run -d -p 80:8080 --name jisi ${{ secrets.DOCKERHUB_ID }}/jisi:latest
+            docker rmi ${{ secrets.DOCKERHUB_ID2 }}/jisi:latest
+            docker pull ${{ secrets.DOCKERHUB_ID2 }}/jisi:latest
+            docker run -d -p 80:8080 --name jisi ${{ secrets.DOCKERHUB_ID2 }}/jisi:latest
             docker network connect redis-network jisi
 
   deploy:
