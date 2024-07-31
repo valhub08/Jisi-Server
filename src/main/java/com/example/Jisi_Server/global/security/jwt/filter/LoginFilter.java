@@ -51,6 +51,7 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
             UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(phoneNumber, password, null);
             return authenticationManager.authenticate(authToken);
         } catch(IOException e) {
+
             throw new RuntimeException("Json 파싱 error");
         }
     }
