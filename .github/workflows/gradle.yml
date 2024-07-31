@@ -14,8 +14,8 @@ env:
   MYSQL_USERNAME: ${{ secrets.MYSQL_USERNAME }}
   MYSQL_DB_URL: ${{ secrets.MYSQL_DB_URL }}
   REDIS_PASSWORD: ${{ secrets.REDIS_PASSWORD }}
-  JWT_KEY: ${{ secrets.JWT_KEY }}
   REDIS_DB_URL: ${{ secrets.REDIS_DB_URL }}
+  JWT_KEY: ${{ secrets.JWT_KEY }}
 
 jobs:
   build:
@@ -29,12 +29,6 @@ jobs:
         with:
           java-version: '17'
           distribution: 'temurin'
-
-      - name: make application.yml
-        run: |
-          cd ./src/main/resources
-          touch ./application.yml
-          echo "${{ secrets.APPLICATION }}" > ./application.yml
 
       - name: set chmod
         run: chmod +x ./gradlew
@@ -67,7 +61,7 @@ jobs:
             docker network disconnect redis-network jisi
             docker rmi ${{ secrets.DOCKERHUB_ID2 }}/jisi:latest
             docker pull ${{ secrets.DOCKERHUB_ID2 }}/jisi:latest
-            docker run -d -p 80:8080 --name jisi ${{ secrets.DOCKERHUB_ID2 }}/jisi:latest
+            docker run -d -p 80:8080 --env-file ./server.env --name jisi ${{ secrets.DOCKERHUB_ID2 }}/jisi:latest
 
   deploy:
 

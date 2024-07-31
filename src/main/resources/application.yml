@@ -5,7 +5,7 @@ spring:
         redis:
             host: ${REDIS_DB_URL}
             password: ${REDIS_PASSWORD}
-            port: 6379
+            port: ${REDIS_PORT}
     datasource:
         password: ${MYSQL_PASSWORD}
         url: ${MYSQL_DB_URL}
