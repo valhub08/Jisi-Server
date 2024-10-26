@@ -49,3 +49,6 @@ dependencies {
 tasks.named('test') {
 	useJUnitPlatform()
 }
+tasks.named('bootJar') {
+    mainClass = 'com.example.server10.Server10Application' // mainClass 속성으로 변경
+}
